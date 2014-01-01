@@ -9,11 +9,14 @@
 ########## Variables
 
 # dotfiles directory
-dir=$(git rev-parse --show-toplevel)                   
+CWD=$(pwd)
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+gitdir=$( cd $DIR;git rev-parse --show-toplevel )
+dir=$gitdir/src                   
 # old dotfiles backup directory
-olddir=./.dotfiles_old             
+olddir=$CWD/dotfiles_old             
 # list of files/folders to symlink in homedir
-files="bashrc vimrc vim"    
+files="bashrc vimrc vim gitignore gitconfig "    
 
 ##########
 
@@ -31,7 +34,7 @@ echo "...done"
 # then create symlinks 
 for file in $files; do
     echo "Moving any existing dotfiles from ~ to $olddir"
-    mv ./.$file ~/dotfiles_old/
-    echo "Creating symlink to $file in home directory."
-    ln -s $dir/$file ./.$file
+    mv $CWD/.$file $olddir/ 
+    echo "Creating symlink to $dir/$file in home directory."
+    ln -s $dir/$file $CWD/.$file
 done

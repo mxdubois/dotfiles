@@ -50,6 +50,12 @@ set background=dark
 colorscheme solarized
 highlight Normal ctermfg=grey ctermbg=NONE
 
+" Better diff
+"highlight DiffAdd cterm=NONE ctermfg=NONE ctermbg=Green gui=NONE guifg=bg guibg=Green
+"highlight DiffDelete cterm=NONE ctermfg=NONE ctermbg=Red gui=NONE guifg=bg guibg=Red
+"highlight DiffChange cterm=NONE ctermfg=NONE ctermbg=Yellow gui=NONE guifg=bg guibg=Yellow
+"highlight DiffText cterm=NONE ctermfg=NONE ctermbg=Magenta gui=NONE guifg=bg guibg=Magenta
+
 "enable the mouse
 "set mouse=a
 
