@@ -1,34 +1,46 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "BEGIN VUNDLE CONFIG 
 
+set nocompatible " be iMproved
 filetype off                   " required!
 
-"set rtp+=~/.vim/bundle/vundle/
-"call vundle#rc()
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+" required! 
+Bundle 'gmarik/vundle'
+
+" My Bundles here:
 "
-"" let Vundle manage Vundle
-"" required! 
-"Bundle 'gmarik/vundle'
-"
-"" My Bundles here:
-""
-"" original repos on github
-""Bundle 'tpope/vim-fugitive'
+" original repos on github
+""""""""""""""""""""""""""
+
+" Easy commenting/uncommenting
+Bundle 'scrooloose/nerdcommenter'
+" File explorer
+Bundle 'scrooloose/nerdtree'
+" Makes the same nerdtree available in all tab views
+Bundle 'jistr/vim-nerdtree-tabs'
+Bundle 'ervandew/supertab'
+" Indexes points of interest within document for various languages
+Bundle 'vim-scripts/taglist.vim.git'
+" syntax highlighting for moustache/handlebars templates
+Bundle 'juvenn/mustache.vim.git'
+
+" Git integration
+"Bundle 'tpope/vim-fugitive'
+" Allows jumping to word or char positions via abcd...
 "Bundle 'Lokaltog/vim-easymotion'
-"Bundle 'scrooloose/nerdcommenter'
-"Bundle 'scrooloose/nerdtree'
-"Bundle 'jistr/vim-nerdtree-tabs'
-"Bundle 'ervandew/supertab'
-"Bundle 'vim-scripts/taglist.vim.git'
-"Bundle 'juvenn/mustache.vim.git'
-""Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-""Bundle 'tpope/vim-rails.git'
-"" vim-scripts repos
-""Bundle 'L9'
-""Bundle 'FuzzyFinder'
-"" non github repos
-""Bundle 'git://git.wincent.com/command-t.git'
-"" ...
+
+" vim-scripts repos
+"""""""""""""""""""
+"Bundle 'L9'
+"Bundle 'FuzzyFinder'
+
+" non github repos
+""""""""""""""""""
+"Bundle 'git://git.wincent.com/command-t.git'
 
 filetype plugin indent on     " required! 
 "
@@ -43,19 +55,13 @@ filetype plugin indent on     " required!
 
 "END VUNDLE CONFIG 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 syntax enable
 "set t_Co=256
 let g:solarized_termtrans=0
 set background=dark
 colorscheme solarized
 highlight Normal ctermfg=grey ctermbg=NONE
-
-" Better diff
-"highlight DiffAdd cterm=NONE ctermfg=NONE ctermbg=Green gui=NONE guifg=bg guibg=Green
-"highlight DiffDelete cterm=NONE ctermfg=NONE ctermbg=Red gui=NONE guifg=bg guibg=Red
-"highlight DiffChange cterm=NONE ctermfg=NONE ctermbg=Yellow gui=NONE guifg=bg guibg=Yellow
-"highlight DiffText cterm=NONE ctermfg=NONE ctermbg=Magenta gui=NONE guifg=bg guibg=Magenta
-
 "enable the mouse
 "set mouse=a
 
@@ -71,10 +77,20 @@ map  <ESC>[5C :tabnext<cr>
 imap <ESC>[5D <ESC>:tabprevious<cr>i
 imap <ESC>[5C <ESC>:tabnext<cr>i
 
-nmap <silent> <A-Up> :wincmd k<CR>
-nmap <silent> <A-Down> :wincmd j<CR>
-nmap <silent> <A-Left> :wincmd h<CR>
-nmap <silent> <A-Right> :wincmd l<CR>
+" Move lines with alt-arrow or alt-j/k
+" these don't work in PuTTy?
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-Up> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+nnoremap <A-Down> :m .-2<CR>==
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-Up> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
+inoremap <A-Down> <Esc>:m .-2<CR>==gi
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-Up> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
+vnoremap <A-Down> :m '<-2<CR>gv=gv
 
 " Window height 0 removes line number from bot of windows
 set wmh=0
@@ -158,11 +174,11 @@ let &colorcolumn=join(range(81,999),",")
 "autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " open and close NERDTree with <Tab>
-"map <Tab> :NERDTreeToggle<cr>
+map <Tab> :NERDTreeToggle<cr>
 "map <Tab> :NERDTreeTabsToggle<cr>
 
 " close NERDTree when a file is opened
-"autocmd bufenter * if (!(exists("b:NERDTreeType") && b:NERDTreeType == "primary")) | NERDTreeClose | endif
+autocmd bufenter * if (!(exists("b:NERDTreeType") && b:NERDTreeType == "primary")) | NERDTreeClose | endif
 
 " open NERDTree on the right
 "let g:NERDTreeWinPos = "right"
