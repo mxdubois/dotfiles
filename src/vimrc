@@ -16,6 +16,8 @@ Bundle 'gmarik/vundle'
 " original repos on github
 """"""""""""""""""""""""""
 
+" Solarized Colorscheme
+Bundle 'altercation/vim-colors-solarized.git'
 " Easy commenting/uncommenting
 Bundle 'scrooloose/nerdcommenter'
 " File explorer
@@ -57,11 +59,12 @@ filetype plugin indent on     " required!
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 syntax enable
-"set t_Co=256
-let g:solarized_termtrans=0
+set t_Co=256
+"let g:solarized_termtrans=0
+let g:solarized_termcolors=256
 set background=dark
 colorscheme solarized
-highlight Normal ctermfg=grey ctermbg=NONE
+"highlight Normal ctermfg=grey ctermbg=NONE
 "enable the mouse
 "set mouse=a
 
