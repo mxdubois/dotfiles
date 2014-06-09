@@ -11,13 +11,13 @@ call vundle#rc()
 " required! 
 Bundle 'gmarik/vundle'
 
-" My Bundles here:
-"
-" original repos on github
-""""""""""""""""""""""""""
+" MY BUNDLES 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" github repos
+""""""""""""""""""""""""""
 " Solarized Colorscheme
-Bundle 'altercation/vim-colors-solarized.git'
+Bundle 'altercation/vim-colors-solarized'
 " Easy commenting/uncommenting
 Bundle 'scrooloose/nerdcommenter'
 " File explorer
@@ -29,20 +29,27 @@ Bundle 'ervandew/supertab'
 Bundle 'vim-scripts/taglist.vim.git'
 " syntax highlighting for moustache/handlebars templates
 Bundle 'juvenn/mustache.vim.git'
-
+" Extend % to match things other than braces (like HTML tags)
+Bundle 'jwhitley/vim-matchit'
+" Insert/modify surrounding tags/quotes/brackets/etc..
+Bundle 'tpope/vim-surround'
+" Treat buffers more like tabs in typical GUI editors
+" See discussion here: http://stackoverflow.com/a/103590/1599617
+Bundle 'fholgado/minibufexpl.vim'
 " Git integration
 "Bundle 'tpope/vim-fugitive'
-" Allows jumping to word or char positions via abcd...
-"Bundle 'Lokaltog/vim-easymotion'
+"Easier file opening
+"Bundle 'kien/ctrlp.vim'
+
+" non github repos
+""""""""""""""""""
+" Easier file opening
+"Bundle 'git://git.wincent.com/command-t.git'
 
 " vim-scripts repos
 """""""""""""""""""
 "Bundle 'L9'
 "Bundle 'FuzzyFinder'
-
-" non github repos
-""""""""""""""""""
-"Bundle 'git://git.wincent.com/command-t.git'
 
 filetype plugin indent on     " required! 
 "
@@ -57,22 +64,126 @@ filetype plugin indent on     " required!
 
 "END VUNDLE CONFIG 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" TMUX FIXES
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if &term =~ '^screen'
+    " tmux will send xterm-style keys when xterm-keys is on
+    execute "set <xUp>=\e[1;*A"
+    execute "set <xDown>=\e[1;*B"
+    execute "set <xRight>=\e[1;*C"
+    execute "set <xLeft>=\e[1;*D"
+endif
 
+" MINIBUFEXPLORER
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" MiniBufExplorer set status line to empty
+g:miniBufExplStatusLineText=""
+
+" NERDTREE
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" open and close NERDTree with <Tab>
+map <Tab> :NERDTreeToggle<cr>
+"map <Tab> :NERDTreeTabsToggle<cr>
+
+" close NERDTree when a file is opened
+autocmd bufenter * if (!(exists("b:NERDTreeType") && b:NERDTreeType == "primary")) | NERDTreeClose | endif
+
+" close vim if the only window left open is a NERDTree
+"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+"" load NERDTree on vim start if opened without file args
+autocmd VimEnter * if !argc() | NERDTree | endif 
+
+" STARTUP 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"enable the matchit plugin to enable jumping between open and closing
+"HTML tags (among other things)
+runtime macros/matchit.vim
+
+"source ~/dotfiles/google_python_style.vim
+
+" COLORSCHEME
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 syntax enable
-set t_Co=256
-"let g:solarized_termtrans=0
+"let g:solarized_termtrans=0 " Set terminal to transparent mode
+set t_Co=256 " Force 256 colors
 let g:solarized_termcolors=256
 set background=dark
 colorscheme solarized
-"highlight Normal ctermfg=grey ctermbg=NONE
+"highlight Normal ctermfg=grey ctermbg=NONE " Set foreground/bg
+
+"autocompletion highlight colors
+highlight  Pmenu      cterm=NONE ctermfg=white ctermbg=blue 
+highlight  PmenuSel   cterm=NONE ctermfg=black ctermbg=white
+highlight  PmenuSbar  cterm=NONE ctermfg=white ctermbg=white
+highlight  PmenuThumb cterm=NONE ctermfg=white ctermbg=cyan 
+
+"bold characters past the 79th column
+highlight OverLength cterm=bold
+"autocmd BufNewFile,BufRead * match OverLength /\%>79v.\+/
+
+"highlight columns past the 80th column
+let &colorcolumn=join(range(81,999),",")
+
+" BEHAVIOR
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "enable the mouse
 "set mouse=a
+
+" Window height 0 removes line number from bot of windows
+"set wmh=0
+" Display line numbers along left side
+set nu
 
 "does case-sensitive matching if the search string contains caps
 set ignorecase
 set smartcase
 
-"set keybindings for tab movement
+"set the tab key to insert 4 spaces
+set tabstop=4
+set shiftwidth=4
+" use spaces instead of tabs
+set expandtab
+
+"hilite tab characters
+set lcs=tab:>-
+"set list!
+
+"show keys as they're pressed in normal mode
+set showcmd
+
+"make the cursor always stay at least 3 lines from the top or bottom of the
+"screen
+set scrolloff=3
+
+" modify buffers on switch (autosave)
+"set autowrite
+
+"" don't open buffers in new window when modified buffer exists
+"set hidden
+
+
+" GENERAL MAPPINGS
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"map Control-t to new tab
+map <C-t> :tabnew 
+
+"always show the tab bar
+set showtabline=2
+
+"set C-x to quit the current tab
+map <C-x> :q<cr>
+
+"map the space bar to toggle comments using NERD Commenter
+map <Space> \c<Space>
+
+" control + arrow key to navigate windows
+nnoremap <silent> <C-Right> <c-w>l
+nnoremap <silent> <C-Left> <c-w>h
+nnoremap <silent> <C-Up> <c-w>k
+nnoremap <silent> <C-Down> <c-w>j
+
+"set keybindings for moving betwen tabs
 nmap <ESC>[5D :tabprevious<cr>
 nmap <ESC>[5C :tabnext<cr>
 map  <ESC>[5D :tabprevious<cr>
@@ -81,7 +192,7 @@ imap <ESC>[5D <ESC>:tabprevious<cr>i
 imap <ESC>[5C <ESC>:tabnext<cr>i
 
 " Move lines with alt-arrow or alt-j/k
-" these don't work in PuTTy?
+" these don't work???
 nnoremap <A-j> :m .+1<CR>==
 nnoremap <A-Up> :m .+1<CR>==
 nnoremap <A-k> :m .-2<CR>==
@@ -95,60 +206,7 @@ vnoremap <A-Up> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 vnoremap <A-Down> :m '<-2<CR>gv=gv
 
-" Window height 0 removes line number from bot of windows
-set wmh=0
-" Display line numbers along left side
-set nu
-
-"map Control-t to new tab
-map <C-t> :tabnew 
-
-"set the tab key to insert 4 spaces
-set tabstop=4
-set shiftwidth=4
-
-"use spaces instead of tab characters for Python files
-"autocmd BufNewFile,BufRead *.py set expandtab
-set expandtab
-
-"hilite tab characters
-set lcs=tab:>-
-"set list!
-
-"map the space bar to toggle comments using NERD Commenter
-map <Space> \c<Space>
-
-"autocompletion highlight colors
-highlight  Pmenu      cterm=NONE ctermfg=white ctermbg=blue 
-highlight  PmenuSel   cterm=NONE ctermfg=black ctermbg=white
-highlight  PmenuSbar  cterm=NONE ctermfg=white ctermbg=white
-highlight  PmenuThumb cterm=NONE ctermfg=white ctermbg=cyan 
-
-"always show the tab bar
-set showtabline=2
-
-"set C-x to quit the current tab
-map <C-x> :q<cr>
-
-"enable the matchit plugin to enable jumping between open and closing
-"HTML tags (among other things)
-runtime macros/matchit.vim
-
-"show keys as they're pressed in normal mode
-set showcmd
-
-"make the cursor always stay at least 3 lines from the top or bottom of the
-"screen
-set scrolloff=3
-
-"bold characters past the 79th column
-highlight OverLength cterm=bold
-"autocmd BufNewFile,BufRead * match OverLength /\%>79v.\+/
-
-"highlight columns past the 80th column
-let &colorcolumn=join(range(81,999),",")
-
-"disable the arrow keys!
+"disable the arrow keys to develop your vim master1337skillz!
 "inoremap  <Up>     <Esc>:echo "use k"<cr>
 "inoremap  <Down>   <Esc>:echo "use j"<cr>
 "inoremap  <Left>   <Esc>:echo "use h"<cr>
@@ -161,27 +219,3 @@ let &colorcolumn=join(range(81,999),",")
 "turn off php variable highliting
 "autocmd BufNewFile,BufRead * highlight phpIdentifier cterm=NONE ctermfg=NONE
 
-"source ~/dotfiles/google_python_style.vim
-
-" modify buffers on switch
-"set autowrite
-
-"" don't open buffers in new window when modified buffer exists
-"set hidden
-
-"" load NERDTree on vim start
-"autocmd vimenter * NERDTree
-"autocmd vimenter * NERDTreeClose
-
-" close vim if the only window left open is a NERDTree
-"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-
-" open and close NERDTree with <Tab>
-map <Tab> :NERDTreeToggle<cr>
-"map <Tab> :NERDTreeTabsToggle<cr>
-
-" close NERDTree when a file is opened
-autocmd bufenter * if (!(exists("b:NERDTreeType") && b:NERDTreeType == "primary")) | NERDTreeClose | endif
-
-" open NERDTree on the right
-"let g:NERDTreeWinPos = "right"
