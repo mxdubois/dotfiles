@@ -14,7 +14,18 @@ Bundle 'gmarik/vundle'
 " MY BUNDLES 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" github repos
+" Auto-complete
+""""""""""""""""""""""""""
+" Speedy, as-you-type autocompletion
+" IMPORTANT: This has a compiled component. 
+" If you install/update with vundle you may have to recompile (not too hard). 
+" Follow the instructions here: http://valloric.github.io/YouCompleteMe/
+Bundle 'Valloric/YouCompleteMe'
+
+" A less powerful auto-complete that doesn't require compiled component
+"Bundle 'ervandew/supertab'
+
+" other github repos
 """"""""""""""""""""""""""
 " Solarized Colorscheme
 Bundle 'altercation/vim-colors-solarized'
@@ -24,7 +35,6 @@ Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 " Makes the same nerdtree available in all tab views
 Bundle 'jistr/vim-nerdtree-tabs'
-Bundle 'ervandew/supertab'
 " Indexes points of interest within document for various languages
 Bundle 'vim-scripts/taglist.vim.git'
 " syntax highlighting for moustache/handlebars templates
@@ -66,6 +76,9 @@ filetype plugin indent on     " required!
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " TMUX FIXES
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Fixes modified keys from tmux with xterm keys enabled.
+" This allows things like Ctrl + Left_Arrow to work properly in tmux.
+" Gleaned from http://unix.stackexchange.com/a/34723/71994
 if &term =~ '^screen'
     " tmux will send xterm-style keys when xterm-keys is on
     execute "set <xUp>=\e[1;*A"
@@ -77,7 +90,18 @@ endif
 " MINIBUFEXPLORER
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MiniBufExplorer set status line to empty
-g:miniBufExplStatusLineText=""
+let g:miniBufExplStatusLineText=''
+
+let g:miniBufExplBuffersNeeded = 0
+
+" Use Control-Tab and Control-Shift-Tab to flip through buffers in current window
+" TODO Can't do this because TAB is itself a control key (ctrl+i)
+"noremap <C-TAB>   :MBEbn<CR>
+"noremap <C-S-TAB> :MBEbp<CR>
+" ...In most-recently-used fashion.
+"noremap <C-TAB>   :MBEbf<CR>
+"noremap <C-S-TAB> :MBEbb<CR>
+
 
 " NERDTREE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
