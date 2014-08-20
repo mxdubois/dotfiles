@@ -27,6 +27,8 @@ Bundle 'Valloric/YouCompleteMe'
 
 " other github repos
 """"""""""""""""""""""""""
+"Editor config ala editorconfig.org
+Bundle 'editorconfig/editorconfig-vim.git'
 " Solarized Colorscheme
 Bundle 'altercation/vim-colors-solarized'
 " Easy commenting/uncommenting
@@ -35,6 +37,8 @@ Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 " Makes the same nerdtree available in all tab views
 Bundle 'jistr/vim-nerdtree-tabs'
+" Jshint for vim
+Bundle 'wookiehangover/jshint.vim'
 " Indexes points of interest within document for various languages
 Bundle 'vim-scripts/taglist.vim.git'
 " syntax highlighting for moustache/handlebars templates
@@ -86,6 +90,10 @@ if &term =~ '^screen'
     execute "set <xRight>=\e[1;*C"
     execute "set <xLeft>=\e[1;*D"
 endif
+
+" TAGLIST
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let Tlist_Use_Right_Window = 1
 
 " MINIBUFEXPLORER
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
