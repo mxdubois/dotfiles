@@ -91,6 +91,9 @@ if &term =~ '^screen'
     execute "set <xLeft>=\e[1;*D"
 endif
 
+" JSHint 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let JSHintUpdateWriteOnly=1 " Live hinting is buggy.
 " TAGLIST
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let Tlist_Use_Right_Window = 1
