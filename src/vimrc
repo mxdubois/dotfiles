@@ -137,6 +137,10 @@ runtime macros/matchit.vim
 
 "source ~/dotfiles/google_python_style.vim
 
+" FILETYPES 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+
 " COLORSCHEME
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 syntax enable
