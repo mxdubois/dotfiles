@@ -47,6 +47,11 @@ Bundle 'juvenn/mustache.vim.git'
 Bundle 'jwhitley/vim-matchit'
 " Insert/modify surrounding tags/quotes/brackets/etc..
 Bundle 'tpope/vim-surround'
+" Call terminal commands from vim in the background
+" Useful for compiling, linting, testing
+Bundle 'tpope/vim-dispatch'
+" Run mocha from vim
+Bundle 'geekjuice/vim-mocha' 
 " Treat buffers more like tabs in typical GUI editors
 " See discussion here: http://stackoverflow.com/a/103590/1599617
 Bundle 'fholgado/minibufexpl.vim'
@@ -94,6 +99,14 @@ endif
 " JSHint 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let JSHintUpdateWriteOnly=1 " Live hinting is buggy.
+" MOCHA - js unit tests 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Run grunt instead of mocha. Kind of hacky, but it works.
+let g:mocha_js_command = "!grunt test"
+map <Leader>t :call RunCurrentSpecFile()<CR>
+"map <Leader>s :call RunNearestSpec()<CR>
+"map <Leader>l :call RunLastSpec()<CR>
+map <Leader>a :call RunAllSpecs()<CR>
 " TAGLIST
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let Tlist_Use_Right_Window = 1
