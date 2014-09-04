@@ -138,6 +138,9 @@ autocmd StdinReadPre * let s:std_in=1
 " Close vim if the only window left is NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
+" Close NERDTree upon opening a file
+let NERDTreeQuitOnOpen=1
+
 " STARTUP 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "enable the matchit plugin to enable jumping between open and closing
