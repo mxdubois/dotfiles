@@ -14,3 +14,7 @@
     autosetuprebase = always
 [core]
 	excludesfile = ~/.gitignore
+[push]
+	default = simple
+[merge]
+	ff = false
