@@ -126,21 +126,17 @@ let g:miniBufExplBuffersNeeded = 0
 "noremap <C-TAB>   :MBEbf<CR>
 "noremap <C-S-TAB> :MBEbb<CR>
 
-
 " NERDTREE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " open and close NERDTree with <Tab>
 map <Tab> :NERDTreeToggle<cr>
-"map <Tab> :NERDTreeTabsToggle<cr>
-
-" close NERDTree when a file is opened
-autocmd bufenter * if (!(exists("b:NERDTreeType") && b:NERDTreeType == "primary")) | NERDTreeClose | endif
-
-" close vim if the only window left open is a NERDTree
-"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 "" load NERDTree on vim start if opened without file args
 autocmd VimEnter * if !argc() | NERDTree | endif 
+autocmd StdinReadPre * let s:std_in=1
+
+" Close vim if the only window left is NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " STARTUP 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -177,6 +173,9 @@ highlight OverLength cterm=bold
 "highlight columns past the 80th column
 let &colorcolumn=join(range(81,999),",")
 
+" Display line numbers along left side
+set nu
+
 " BEHAVIOR
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "enable the mouse
@@ -184,8 +183,6 @@ let &colorcolumn=join(range(81,999),",")
 
 " Window height 0 removes line number from bot of windows
 "set wmh=0
-" Display line numbers along left side
-set nu
 
 "does case-sensitive matching if the search string contains caps
 set ignorecase
@@ -242,21 +239,6 @@ map  <ESC>[5D :tabprevious<cr>
 map  <ESC>[5C :tabnext<cr>
 imap <ESC>[5D <ESC>:tabprevious<cr>i
 imap <ESC>[5C <ESC>:tabnext<cr>i
-
-" Move lines with alt-arrow or alt-j/k
-" these don't work???
-nnoremap <A-j> :m .+1<CR>==
-nnoremap <A-Up> :m .+1<CR>==
-nnoremap <A-k> :m .-2<CR>==
-nnoremap <A-Down> :m .-2<CR>==
-inoremap <A-j> <Esc>:m .+1<CR>==gi
-inoremap <A-Up> <Esc>:m .+1<CR>==gi
-inoremap <A-k> <Esc>:m .-2<CR>==gi
-inoremap <A-Down> <Esc>:m .-2<CR>==gi
-vnoremap <A-j> :m '>+1<CR>gv=gv
-vnoremap <A-Up> :m '>+1<CR>gv=gv
-vnoremap <A-k> :m '<-2<CR>gv=gv
-vnoremap <A-Down> :m '<-2<CR>gv=gv
 
 "disable the arrow keys to develop your vim master1337skillz!
 "inoremap  <Up>     <Esc>:echo "use k"<cr>
