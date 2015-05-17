@@ -1,5 +1,5 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"BEGIN VUNDLE CONFIG 
+"BEGIN VUNDLE CONFIG
 
 set nocompatible " be iMproved
 filetype off                   " required!
@@ -8,17 +8,17 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 " let Vundle manage Vundle
-" required! 
+" required!
 Bundle 'gmarik/vundle'
 
-" MY BUNDLES 
+" MY BUNDLES
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Auto-complete
 """"""""""""""""""""""""""
 " Speedy, as-you-type autocompletion
-" IMPORTANT: This has a compiled component. 
-" If you install/update with vundle you may have to recompile (not too hard). 
+" IMPORTANT: This has a compiled component.
+" If you install/update with vundle you may have to recompile (not too hard).
 " Follow the instructions here: http://valloric.github.io/YouCompleteMe/
 Bundle 'Valloric/YouCompleteMe'
 
@@ -38,7 +38,9 @@ Bundle 'scrooloose/nerdtree'
 " Makes the same nerdtree available in all tab views
 Bundle 'jistr/vim-nerdtree-tabs'
 " Jshint for vim
-Bundle 'wookiehangover/jshint.vim'
+"Bundle 'wookiehangover/jshint.vim'
+" Jshint for vim
+Bundle 'scrooloose/syntastic'
 " Indexes points of interest within document for various languages
 Bundle 'vim-scripts/taglist.vim.git'
 " syntax highlighting for moustache/handlebars templates
@@ -51,10 +53,20 @@ Bundle 'tpope/vim-surround'
 " Useful for compiling, linting, testing
 Bundle 'tpope/vim-dispatch'
 " Run mocha from vim
-Bundle 'geekjuice/vim-mocha' 
+Bundle 'geekjuice/vim-mocha'
 " Treat buffers more like tabs in typical GUI editors
 " See discussion here: http://stackoverflow.com/a/103590/1599617
 Bundle 'fholgado/minibufexpl.vim'
+" Coffescript syntax highlighting
+Bundle 'kchmck/vim-coffee-script'
+" Less css syntax highlighting
+Bundle 'groenewege/vim-less'
+" Slim template syntax highlighting
+Bundle 'slim-template/vim-slim.git'
+" syntax autocompletion for js libraries
+Bundle 'othree/javascript-libraries-syntax.vim'
+" fuzzy file finder
+Bundle 'kien/ctrlp.vim'
 " Git integration
 "Bundle 'tpope/vim-fugitive'
 "Easier file opening
@@ -70,7 +82,7 @@ Bundle 'fholgado/minibufexpl.vim'
 "Bundle 'L9'
 "Bundle 'FuzzyFinder'
 
-filetype plugin indent on     " required! 
+filetype plugin indent on     " required!
 "
 " Brief help
 " :BundleList          - list configured bundles
@@ -81,7 +93,7 @@ filetype plugin indent on     " required!
 " see :h vundle for more details or wiki for FAQ
 " NOTE: comments after Bundle command are not allowed..
 
-"END VUNDLE CONFIG 
+"END VUNDLE CONFIG
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " TMUX FIXES
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -96,10 +108,23 @@ if &term =~ '^screen'
     execute "set <xLeft>=\e[1;*D"
 endif
 
-" JSHint 
+" CTRLP
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let JSHintUpdateWriteOnly=1 " Live hinting is buggy.
-" MOCHA - js unit tests 
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+
+" JSHint
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"let JSHintUpdateWriteOnly=1 " Live hinting is buggy.
+
+""" To set up eslint:
+" npm install -g eslint
+" npm install -g babel-eslint
+" npm install -g eslint-plugin-react
+"""
+let g:syntastic_javascript_checkers = ['eslint']
+
+" MOCHA - js unit tests
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Run grunt instead of mocha. Kind of hacky, but it works.
 let g:mocha_js_command = "!grunt test"
@@ -132,7 +157,7 @@ let g:miniBufExplBuffersNeeded = 0
 map <Tab> :NERDTreeToggle<cr>
 
 "" load NERDTree on vim start if opened without file args
-autocmd VimEnter * if !argc() | NERDTree | endif 
+autocmd VimEnter * if !argc() | NERDTree | endif
 autocmd StdinReadPre * let s:std_in=1
 
 " Close vim if the only window left is NERDTree
@@ -141,15 +166,16 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 " Close NERDTree upon opening a file
 let NERDTreeQuitOnOpen=1
 
-" STARTUP 
+" STARTUP
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "enable the matchit plugin to enable jumping between open and closing
 "HTML tags (among other things)
 runtime macros/matchit.vim
+autocmd BufWritePre * :%s/\s\+$//e "removes all trailing whitespace upon :w
 
 "source ~/dotfiles/google_python_style.vim
 
-" FILETYPES 
+" FILETYPES
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
@@ -164,10 +190,10 @@ colorscheme solarized
 "highlight Normal ctermfg=grey ctermbg=NONE " Set foreground/bg
 
 "autocompletion highlight colors
-highlight  Pmenu      cterm=NONE ctermfg=white ctermbg=blue 
+highlight  Pmenu      cterm=NONE ctermfg=white ctermbg=blue
 highlight  PmenuSel   cterm=NONE ctermfg=black ctermbg=white
 highlight  PmenuSbar  cterm=NONE ctermfg=white ctermbg=white
-highlight  PmenuThumb cterm=NONE ctermfg=white ctermbg=cyan 
+highlight  PmenuThumb cterm=NONE ctermfg=white ctermbg=cyan
 
 "bold characters past the 79th column
 highlight OverLength cterm=bold
@@ -191,11 +217,12 @@ set nu
 set ignorecase
 set smartcase
 
-"set the tab key to insert 4 spaces
-set tabstop=4
-set shiftwidth=4
+"set the tab key to insert 2 spaces
+set tabstop=2
+set shiftwidth=2
 " use spaces instead of tabs
 set expandtab
+set backspace=indent,eol,start
 
 "hilite tab characters
 set lcs=tab:>-
@@ -218,7 +245,7 @@ set scrolloff=3
 " GENERAL MAPPINGS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "map Control-t to new tab
-map <C-t> :tabnew 
+map <C-t> :tabnew
 
 "always show the tab bar
 set showtabline=2
