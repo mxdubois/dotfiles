@@ -16,7 +16,7 @@ dir=$gitdir/src
 # old dotfiles backup directory
 olddir=$CWD/dotfiles_old
 # list of files/folders to symlink in homedir
-files="bashrc vimrc vim gitignore gitconfig tmux.conf git-completion.bash"
+files="bashrc vimrc vim gitignore gitconfig tmux.conf git-completion.bash eslintrc"
 
 ##########
 
