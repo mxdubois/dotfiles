@@ -37,6 +37,8 @@ Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 " Makes the same nerdtree available in all tab views
 Bundle 'jistr/vim-nerdtree-tabs'
+" Adds git status flags to nerdtree entries
+Bundle 'Xuyuanp/nerdtree-git-plugin'
 " Jshint for vim
 "Bundle 'wookiehangover/jshint.vim'
 " Jshint for vim
@@ -59,18 +61,29 @@ Bundle 'geekjuice/vim-mocha'
 Bundle 'fholgado/minibufexpl.vim'
 " Coffescript syntax highlighting
 Bundle 'kchmck/vim-coffee-script'
+" Scala highlighting
+Bundle 'derekwyatt/vim-scala'
 " Less css syntax highlighting
 Bundle 'groenewege/vim-less'
 " Slim template syntax highlighting
 Bundle 'slim-template/vim-slim.git'
+" Better javascript indentation (required by vim-jsx)
+Bundle 'pangloss/vim-javascript'
+" JSX highlighting (depends on vim-javascript)
+Bundle 'mxw/vim-jsx'
 " syntax autocompletion for js libraries
-Bundle 'othree/javascript-libraries-syntax.vim'
+"Bundle 'othree/javascript-libraries-syntax.vim'
 " fuzzy file finder
 Bundle 'kien/ctrlp.vim'
 " Git integration
 "Bundle 'tpope/vim-fugitive'
-"Easier file opening
-"Bundle 'kien/ctrlp.vim'
+" Indentation lines
+"Bundle 'Yggdroot/indentLine'
+Bundle 'nathanaelkane/vim-indent-guides'
+" Git gutter
+Bundle 'airblade/vim-gitgutter'
+" Better status line
+Bundle 'bling/vim-airline'
 
 " non github repos
 """"""""""""""""""
@@ -82,7 +95,9 @@ Bundle 'kien/ctrlp.vim'
 "Bundle 'L9'
 "Bundle 'FuzzyFinder'
 
+" Restore filetype settings
 filetype plugin indent on     " required!
+syntax on
 "
 " Brief help
 " :BundleList          - list configured bundles
@@ -95,6 +110,8 @@ filetype plugin indent on     " required!
 
 "END VUNDLE CONFIG
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
 " TMUX FIXES
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Fixes modified keys from tmux with xterm keys enabled.
@@ -103,6 +120,9 @@ filetype plugin indent on     " required!
 if &term =~ '^screen'
     " tmux will send xterm-style keys when xterm-keys is on
     execute "set <xUp>=\e[1;*A"
+    if &term =~ '^screen'
+       execute
+    endif
     execute "set <xDown>=\e[1;*B"
     execute "set <xRight>=\e[1;*C"
     execute "set <xLeft>=\e[1;*D"
@@ -113,16 +133,68 @@ endif
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 
-" JSHint
+" JSX-highlighting
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"let JSHintUpdateWriteOnly=1 " Live hinting is buggy.
+let g:jsx_ext_required = 0
 
+" Syntastic
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ To set up eslint:
 " npm install -g eslint
 " npm install -g babel-eslint
 " npm install -g eslint-plugin-react
 """
 let g:syntastic_javascript_checkers = ['eslint']
+
+" Recommended settings
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+" Location list is annoying. Maybe someday, though.
+let g:syntastic_auto_loc_list = 0
+
+" indentline
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:indentLine_char = '¦'
+let g:indentLine_color_term = 239
+let g:indentLine_color_tty_light = 7 " (default: 4)
+let g:indentLine_color_dark = 1 " (default: 2)
+
+" indent-guides
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"let g:indent_guides_auto_colors = 0
+"let g:indent_guides_enable_on_vim_startup = 1
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=black ctermbg=235
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=darkgrey ctermbg=234
+
+" airline
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+
+" grep
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" TODO figure these out
+" bind K to grep word under cursor
+"nnoremap K : "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+" bind \ (backward slash) to grep shortcut
+"command! -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+"nnoremap \ :grep!<SPACE>
+
+" search/replace
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Replace word under cursor globally
+nnoremap <Leader>a :%s/\<<C-r><C-w>\>/
+
+" Replace word under cursor in line
+nnoremap <Leader>s :s/\<<C-r><C-w>\>/
+
+" Search word under cursor
+nnoremap <Leader>s :/\<<C-r><C-w>\>/
 
 " MOCHA - js unit tests
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -204,6 +276,14 @@ let &colorcolumn=join(range(81,999),",")
 
 " Display line numbers along left side
 set nu
+
+" Less obnoxious highlighting
+"highlight Special cterm=NONE ctermfg=64
+"highlight StorageClass cterm=NONE ctermfg=64
+"highlight Structure cterm=NONE ctermfg=64
+"highlight PreProc cterm=NONE ctermfg=64
+"highlight Type cterm=NONE ctermfg=33
+"highlight Operator cterm=NONE ctermfg=33
 
 " BEHAVIOR
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
